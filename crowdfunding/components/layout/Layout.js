@@ -4,6 +4,8 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from './Header';
 import themes from './themes';
 
+const App = createContext();
+
 const Layout = ({ children }) => {
   const [theme, setTheme] = useState('light');
 
@@ -12,15 +14,17 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <ThemeProvider theme={themes[theme]}>
-      <LayoutWrapper onClick={changeTheme}>
-        <GlobalStyle />
-        <Header />
-        {children}
-      </LayoutWrapper>
-    </ThemeProvider>
+    <App.Provider value={{changeTheme, theme}}>
+      <ThemeProvider theme={themes[theme]}>
+        <LayoutWrapper>
+          <GlobalStyle />
+          <Header />
+          {children}
+        </LayoutWrapper>
+      </ThemeProvider>
+    </App.Provider>
   )
-}
+};
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -37,4 +41,5 @@ const LayoutWrapper = styled.div`
   color: ${(props) => props.theme.color};
 `;
 
-export default Layout
+export default Layout;
+export {App};
