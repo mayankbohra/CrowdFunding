@@ -1,13 +1,12 @@
 const hre = require('hardhat');
 
 async function main() {
-
-    const CampaignFactory = await hre.ethers.getContractFactory("CampaignFactory")
+    const CampaignFactory = await hre.ethers.getContractFactory("CampaignFactory");
     const campaignFactory = await CampaignFactory.deploy();
 
-    await campaignFactory.deployed();
+    await campaignFactory.waitForDeployment();
 
-    console.log("Factory deployed to:", campaignFactory.address);
+    console.log("Factory deployed to:", campaignFactory.target);
 }
 
 main()
