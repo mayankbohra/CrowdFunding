@@ -1,17 +1,31 @@
 import styled from "styled-components";
+import { FormState } from "../Form";
+import { useContext } from "react";
 
 const FormLeftWrapper = () => {
+    const Handler = useContext(FormState);
+
     return (
         <FormLeft>
             <FormInput>
                 <label>Campaign Title</label>
-                <Input placeholder="Campaign Title">
+                <Input 
+                    name='campaignTitle'
+                    onChange={Handler.FormHandler} 
+                    value={Handler.form.campaignTitle} 
+                    placeholder="Campaign Title" 
+                >
                 </Input>
             </FormInput>
 
             <FormInput>
                 <label>Story</label>
-                <TextArea placeholder="Describe your story">
+                <TextArea 
+                    name='story'
+                    onChange={Handler.FormHandler} 
+                    value={Handler.form.story} 
+                    placeholder="Describe your story"
+                >
                 </TextArea>
             </FormInput>
         </FormLeft>
