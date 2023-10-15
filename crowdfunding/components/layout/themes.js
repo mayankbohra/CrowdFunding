@@ -7,11 +7,11 @@ const light = {
 };
 
 const dark = {
-  color: '#fff',
-  bgColor: '#923cb5',
-  bgImage: 'linear-gradient(180deg, #2f0f3d 5%, #000000 90%)',
-  bgDiv: 'black',
-  bgSubDiv: 'rgb(33, 36, 41)'
+  color: '#fff', // Text color
+  bgColor: '#1e1e1e', // Background color
+  bgImage: 'linear-gradient(180deg, #111111 5%, #000000 90%)', // Background gradient
+  bgDiv: '#333', // Background for div elements
+  bgSubDiv: '#222', // Background for sub-div elements
 };
 
 const themes = {

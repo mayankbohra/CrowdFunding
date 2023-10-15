@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 import Campaign from '../artifacts/contracts/Campaign.sol/Campaign.json'
 import { useEffect, useState } from "react";
 
-export default function Detail({Data, DonationsData}) {
+export default function Detail({ Data, DonationsData }) {
   const [mydonations, setMydonations] = useState([]);
   const [story, setStory] = useState('');
   const [amount, setAmount] = useState();
@@ -14,7 +14,7 @@ export default function Detail({Data, DonationsData}) {
   useEffect(() => {
     const Request = async () => {
       let storyData;
-      
+
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const Web3provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = Web3provider.getSigner();
@@ -23,7 +23,7 @@ export default function Detail({Data, DonationsData}) {
       const provider = new ethers.providers.JsonRpcProvider(
         process.env.NEXT_PUBLIC_RPC_URL
       );
-    
+
       const contract = new ethers.Contract(
         Data.address,
         Campaign.abi,
@@ -31,7 +31,7 @@ export default function Detail({Data, DonationsData}) {
       );
 
       fetch('https://crowdfundingproject.infura-ipfs.io/ipfs/' + Data.storyUrl)
-            .then(res => res.text()).then(data => storyData = data);
+        .then(res => res.text()).then(data => storyData = data);
 
       const MyDonations = contract.filters.donated(Address);
       const MyAllDonations = await contract.queryFilter(MyDonations);
@@ -40,7 +40,7 @@ export default function Detail({Data, DonationsData}) {
         return {
           donar: e.args.donar,
           amount: ethers.utils.formatEther(e.args.amount),
-          timestamp : parseInt(e.args.timestamp)
+          timestamp: parseInt(e.args.timestamp)
         }
       }));
 
@@ -56,23 +56,38 @@ export default function Detail({Data, DonationsData}) {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      
+
       const contract = new ethers.Contract(Data.address, Campaign.abi, signer);
-      
-      const transaction = await contract.donate({value: ethers.utils.parseEther(amount)});
+
+      const transaction = await contract.donate({ value: ethers.utils.parseEther(amount) });
       await transaction.wait();
 
       setChange(true);
       setAmount('');
-      
-  } catch (error) {
-      console.log(error);
-  }
 
-  }
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  function formatDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+  
+    // Ensure two-digit format for day, month, hours, minutes, and seconds
+    const formattedDate = `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+  
+    return formattedDate;
+  };
 
   return (
-    <DetailWrapper>
+    <DetailWrapper suppressHydrationWarning={true}>
       <LeftContainer>
         <ImageSection>
           <Image
@@ -109,10 +124,10 @@ export default function Detail({Data, DonationsData}) {
             {DonationsData.map((e) => {
               return (
                 <Donation key={e.timestamp}>
-                <DonationData>{e.donar.slice(0,6)}...{e.donar.slice(39)}</DonationData>
-                <DonationData>{e.amount} Matic</DonationData>
-                <DonationData>{new Date(e.timestamp * 1000).toLocaleString()}</DonationData>
-              </Donation>
+                  <DonationData>{e.donar.slice(0, 6)}...{e.donar.slice(39)}</DonationData>
+                  <DonationData>{e.amount} Matic</DonationData>
+                  <DonationData>{new Date(e.timestamp * 1000).toLocaleString()}</DonationData>
+                </Donation>
               )
             })
             }
@@ -122,10 +137,10 @@ export default function Detail({Data, DonationsData}) {
             {mydonations.map((e) => {
               return (
                 <Donation key={e.timestamp}>
-                <DonationData>{e.donar.slice(0,6)}...{e.donar.slice(39)}</DonationData>
-                <DonationData>{e.amount} Matic</DonationData>
-                <DonationData>{new Date(e.timestamp * 1000).toLocaleString()}</DonationData>
-              </Donation>
+                  <DonationData>{e.donar.slice(0, 6)}...{e.donar.slice(39)}</DonationData>
+                  <DonationData>{e.amount} Matic</DonationData>
+                  <DonationData>{new Date(e.timestamp * 1000).toLocaleString()}</DonationData>
+                </Donation>
               )
             })
             }
@@ -148,14 +163,14 @@ export async function getStaticPaths() {
     provider
   );
 
-  const getAllCampaigns = contract.filters.campaignCreated();   
+  const getAllCampaigns = contract.filters.campaignCreated();
   const AllCampaigns = await contract.queryFilter(getAllCampaigns);
 
   return {
     paths: AllCampaigns.map((e) => ({
-        params: {
-          address: e.args.campaignAddress.toString(),
-        }
+      params: {
+        address: e.args.campaignAddress.toString(),
+      }
     })),
     fallback: "blocking"
   }
@@ -183,21 +198,22 @@ export async function getStaticProps(context) {
   const AllDonations = await contract.queryFilter(Donations);
 
   const Data = {
-      address: context.params.address,
-      title, 
-      requiredAmount: ethers.utils.formatEther(requiredAmount), 
-      image, 
-      receivedAmount: ethers.utils.formatEther(receivedAmount), 
-      storyUrl, 
-      owner,
+    address: context.params.address,
+    title,
+    requiredAmount: ethers.utils.formatEther(requiredAmount),
+    image,
+    receivedAmount: ethers.utils.formatEther(receivedAmount),
+    storyUrl,
+    owner,
   }
 
-  const DonationsData =  AllDonations.map((e) => {
+  const DonationsData = AllDonations.map((e) => {
     return {
       donar: e.args.donar,
       amount: ethers.utils.formatEther(e.args.amount),
-      timestamp : parseInt(e.args.timestamp)
-  }});
+      timestamp: parseInt(e.args.timestamp)
+    }
+  });
 
   return {
     props: {

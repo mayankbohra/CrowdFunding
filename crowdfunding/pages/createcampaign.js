@@ -2,7 +2,7 @@ import Form from '../components/form/Form';
 
 const createcampaign = () => {
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       <Form/>
     </div>
   )

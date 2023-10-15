@@ -16,7 +16,7 @@ const client = IPFSHTTPClient({
   headers: {
     authorization: auth
   }
-});
+})
 
 const FormRightWrapper = () => {
   const Handler = useContext(FormState);

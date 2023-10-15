@@ -12,6 +12,21 @@ import Link from 'next/link'
 export default function Index({ AllData, HealthData, EducationData, AnimalData }) {
   const [filter, setFilter] = useState(AllData);
 
+  function formatDate(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    // Ensure two-digit format for day, month, hours, minutes, and seconds
+    const formattedDate = `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+
+    return formattedDate;
+  };
+
   return (
     <HomeWrapper suppressHydrationWarning={true}>
 
@@ -51,7 +66,7 @@ export default function Index({ AllData, HealthData, EducationData, AnimalData }
               </CardData>
               <CardData>
                 <Text><EventIcon /></Text>
-                <Text>{new Date(e.timeStamp * 1000).toLocaleString()}</Text>
+                <Text>{formatDate(e.timeStamp)}</Text>
               </CardData>
               <Link passHref href={'/' + e.address}><Button>
                 Go to Campaign
