@@ -5,7 +5,18 @@ import { toast } from "react-toastify";
 import { TailSpin } from "react-loader-spinner";
 import { create as IPFSHTTPClient } from 'ipfs-http-client';
 
-const client = IPFSHTTPClient("https://ipfs.infura.io:5001/api/v0");
+const projectId = process.env.NEXT_PUBLIC_IPFS_ID
+const projectSecret = process.env.NEXT_PUBLIC_IPFS_KEY
+const auth = 'Basic ' + Buffer.from(projectId + ":" + projectSecret).toString('base64')
+
+const client = IPFSHTTPClient({
+  host:'ipfs.infura.io',
+  port:5001,
+  protocol: 'https',
+  headers: {
+    authorization: auth
+  }
+});
 
 const FormRightWrapper = () => {
   const Handler = useContext(FormState);
@@ -75,6 +86,7 @@ const FormRightWrapper = () => {
       <FormInput>
         <label>Select Image</label>
         <Image
+          alt = "dapp "
           name='image'
           onChange={Handler.ImageHandler}
           type={'file'}

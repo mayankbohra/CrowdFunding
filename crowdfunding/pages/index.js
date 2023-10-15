@@ -13,7 +13,7 @@ export default function Index({ AllData, HealthData, EducationData, AnimalData }
   const [filter, setFilter] = useState(AllData);
 
   return (
-    <HomeWrapper>
+    <HomeWrapper suppressHydrationWarning={true}>
 
       {/* Filter Section */}
       <FilterWrapper>
@@ -35,7 +35,7 @@ export default function Index({ AllData, HealthData, EducationData, AnimalData }
                 <Image
                   alt="Crowdfunding dapp"
                   layout='fill'
-                  src={"https://crowdfunding.infura-ipfs.io/ipfs/" + e.image}
+                  src={"https://crowdfundingproject.infura-ipfs.io/ipfs/" + e.image}
                 />
               </CardImg>
               <Title>

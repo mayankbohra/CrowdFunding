@@ -47,7 +47,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <HomeWrapper>
+    <HomeWrapper suppressHydrationWarning={true}>
 
       {/* Cards Container */}
       <CardsWrapper>
@@ -60,7 +60,7 @@ export default function Dashboard() {
                 <Image
                   alt="crowdfunding dapp"
                   layout='fill'
-                  src={"https://crowdfunding.infura-ipfs.io/ipfs/" + e.image}
+                  src={"https://crowdfundingproject.infura-ipfs.io/ipfs/" + e.image}
                 />
               </CardImg>
               <Title>
