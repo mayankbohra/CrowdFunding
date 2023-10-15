@@ -26,8 +26,11 @@ const Form = () => {
     setImage(e.target.files[0]);
   };
 
+  const [storyUrl, setStoryUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+
   return (
-    <FormState.Provider value={{form, setForm, image, setImage, FormHandler, ImageHandler}}>
+    <FormState.Provider value={{form, setForm, image, setImage, FormHandler, ImageHandler, setImageUrl, setStoryUrl}}>
       <FormWrapper>
         <FormMain>
           <FormInputsWrapper>

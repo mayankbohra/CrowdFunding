@@ -1,9 +1,45 @@
 import styled from "styled-components";
 import { FormState } from "../Form";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { TailSpin } from "react-loader-spinner";
+import { create as IPFSHTTPClient } from 'ipfs-http-client';
+
+const client = IPFSHTTPClient("https://ipfs.infura.io:5001/api/v0");
 
 const FormRightWrapper = () => {
   const Handler = useContext(FormState);
+
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+
+  const uploadFiles = async (e) => {
+    e.preventDefault();
+    setUploadLoading(true);
+
+    if (Handler.form.story !== "") {
+      try {
+        const added = await client.add(Handler.form.story);
+        Handler.setStoryUrl(added.path)
+      } catch (error) {
+        toast.warn(`Error Uploading Story`);
+      }
+    }
+
+
+    if (Handler.image !== null) {
+      try {
+        const added = await client.add(Handler.image);
+        Handler.setImageUrl(added.path)
+      } catch (error) {
+        toast.warn(`Error Uploading Image`);
+      }
+    }
+
+    setUploadLoading(false);
+    setUploaded(true);
+    toast.success("Files Uploaded Sucessfully")
+  }
 
   return (
     <FormRight>
@@ -11,11 +47,11 @@ const FormRightWrapper = () => {
         <FormRow>
           <RowFirstInput>
             <label>Required Amount</label>
-            <Input 
+            <Input
               name='requiredAmount'
               onChange={Handler.FormHandler}
               value={Handler.form.requiredAmount}
-              type={'number'} 
+              type={'number'}
               placeholder='Required Amount'
             >
             </Input>
@@ -37,17 +73,21 @@ const FormRightWrapper = () => {
       {/* Image */}
       <FormInput>
         <label>Select Image</label>
-        <Image 
+        <Image
           name='image'
           onChange={Handler.ImageHandler}
-          type={'file'} 
+          type={'file'}
           accept='image/*'
         >
         </Image>
       </FormInput>
-      <Button>
-        Upload Files to IPFS
-      </Button>
+      {uploadLoading == true ? <Button><TailSpin color='#fff' height={20} /></Button> :
+        uploaded == false ?
+          <Button onClick={uploadFiles}>
+            Upload Files to IPFS
+          </Button>
+          : <Button style={{ cursor: "no-drop" }}>Files uploaded Sucessfully</Button>
+      }
       <Button>
         Start Campaign
       </Button>
