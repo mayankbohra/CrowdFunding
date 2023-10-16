@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crowdfunding Project
+
+This is a web3-based platform for collecting funds for education, health, or any animal-related causes. It is built using Next.js and Hardhat.
+
+## Table of Contents
+
+- [Crowdfunding Project](#crowdfunding-project)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Setting Environment Variables](#setting-environment-variables)
+    - [Usage](#usage)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Before you begin, ensure you have met the following requirements:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js and npm installed
+- MetaMask wallet with a funded account
+- Infura API Key (for RPC and IPFS)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To set up the project on your local system, follow these steps:
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/mayankbohra/CrowdFunding.git
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Change directory to the project folder:
+   
+   ```bash
+   cd crowdfunding-project
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. Install dependencies:
 
-## Deploy on Vercel
+    ```bash
+    npm instal
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Setting Environment Variables
+Create a `.env.local` file in the root of your project and add the following environment variables:
+    
+    NEXT_PUBLIC_RPC_URL = https://polygon-mumbai.infura.io/v3/YOUR_INFURA_API_KEY
+    NEXT_PUBLIC_PRIVATE_KEY = YOUR_METAMASK_PRIVATE_KEY
+    NEXT_PUBLIC_ADDRESS = YOUR_SMART_CONTRACT_ADDRESS
+    NEXT_PUBLIC_IPFS_ID = YOUR_INFURA_IPFS_API_ID
+    NEXT_PUBLIC_IPFS_KEY = YOUR_INFURA_IPFS_API_KEY
+Make sure to replace the placeholders with your actual values.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Usage
+To start the development server, run the following command:
+
+    npm run dev
+
+Visit `http://localhost:3000` in your web browser to access the crowdfunding platform.
