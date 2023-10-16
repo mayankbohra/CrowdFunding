@@ -1,6 +1,7 @@
 # Crowdfunding Project
 
 This is a web3-based platform for collecting funds for education, health, or any animal-related causes. It is built using Next.js and Hardhat.
+Site is live at 👉 [Crowdfunding](https://crowd-funding-sigma.vercel.app/)
 
 ## Table of Contents
 
